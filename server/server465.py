@@ -79,7 +79,7 @@ class Server465:
         # now, try to log the result
         result = ""
         try:
-            result += b''.join(byteslist).encode()
+            result += b''.join(byteslist).decode('utf8')
         except TypeError as te:
             logger.error("Could not encode reults. Bad bytes.")
 
