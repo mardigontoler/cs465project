@@ -30,7 +30,7 @@ class Server465:
         self.serversocket.listen(10) # refuse connection if more than 10 waiting
         while True:
             (client, addr) = self.serversocket.accept()
-            func = lambda:self.clientInstance(client)
+            func = lambda:self.clientInstance(client, addr)
             newthread = threading.Thread(None, func)
             self.runningthreads.append(newthread)
             newthread.start()
@@ -38,11 +38,11 @@ class Server465:
 
 
 
-    def clientInstance(self, clientSock):
+    def clientInstance(self, clientSock, clientAddr):
         """
         The function which runs in a thread per client
         """
-        logger.info('New client')
+        logger.info('New client from ' + str(clientAddr))
         byteslist = [] # a list that will be populated 1 byte at a time
         clientSock.settimeout(None)
 
@@ -71,7 +71,8 @@ class Server465:
                 nextbyte = clientSock.recv(1)
                 byteslist.append(nextbyte)
         except socket.timeout as to:
-            pass
+            logger.info(str(clientAddr) + ' is timing out...\n')
+            return
 
         if byteslist[-1] == b'\xFF':
             byteslist = byteslist[0:-1] # strip off last element
@@ -80,7 +81,7 @@ class Server465:
         result = ""
         try:
             result += b''.join(byteslist).decode('utf8')
-        except TypeError as te:
+        except UnicodeDecodeError as decodeError:
             logger.error("Could not encode reults. Bad bytes.")
 
         logger.info(result)
