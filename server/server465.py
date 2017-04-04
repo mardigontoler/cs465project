@@ -60,7 +60,7 @@ class Server465:
 
         # the timeout clock starts ticking once 
         # that first correct byte is sent
-        clientSock.settimeout(3)
+        clientSock.settimeout(10)
 
         try:
             nextbyte = clientSock.recv(1)
