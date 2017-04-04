@@ -4,7 +4,6 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
 
 public class DataHandler {
 
@@ -33,10 +32,10 @@ public class DataHandler {
             outputStream.write(data.getBytes());
             outputStream.write(0xff);
             outputStream.flush();
-            inputStream.close();
-            outputStream.close();
-            sock.close();
         }
+        inputStream.close();
+        outputStream.close();
+        sock.close();
     }
 
 }

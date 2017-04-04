@@ -8,8 +8,6 @@ import java.io.IOException;
 
 
 public class LoginForm extends JFrame implements ActionListener, MouseListener, MouseMotionListener{
-
-
 //this.getContentPane().setBackground(Color.black);
     /**
      * Creates new form LoginForm
@@ -19,6 +17,7 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
         this.getContentPane().setBackground(new Color(38,38,38));
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
+        setIconImage(new ImageIcon("icon.png").getImage());
     }
 
     /**
@@ -42,8 +41,8 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
         AccountName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        LOGIN = new javax.swing.JButton();
-        CANCEL = new javax.swing.JButton();
+        LOGIN = new javax.swing.JButton(new ImageIcon("LoginButton.png"));
+        CANCEL = new javax.swing.JButton(new ImageIcon("CancelButton.png"));
         fakeRadio = new JButton("");
         jCheckBox1 = new JLabel();
         Password = new javax.swing.JPasswordField();
@@ -55,7 +54,7 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 350, Short.MAX_VALUE)
         );
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,24 +103,30 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
 
         LOGIN.setBackground(new java.awt.Color(38, 38, 38));
         LOGIN.setForeground(new java.awt.Color(207, 207, 207));
-        LOGIN.setText("LOGIN");
+        LOGIN.setBorderPainted(false);
+        LOGIN.setText("");
+        LOGIN.setFocusable(false);
         LOGIN.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         LOGIN.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         LOGIN.addActionListener(this);
+        LOGIN.setContentAreaFilled(false);
 
         CANCEL.setBackground(new java.awt.Color(38, 38, 38));
         CANCEL.setForeground(new java.awt.Color(207, 207, 207));
-        CANCEL.setText("CANCEL");
+        CANCEL.setText("");
+        CANCEL.setBorderPainted(false);
+        CANCEL.setFocusable(false);
         CANCEL.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         CANCEL.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         CANCEL.addActionListener(this);
+        CANCEL.setContentAreaFilled(false);
 
         jCheckBox1.setForeground(new java.awt.Color(238, 238, 238));
         jCheckBox1.setText("         Remember my password");
         jCheckBox1.setBackground(new java.awt.Color(38, 38, 38));
         fakeRadio.addActionListener(this);
         fakeRadio.setBackground(new Color(28,38,38));
-
+        fakeRadio.setFocusable(false);
 
 
         Password.setBackground(new java.awt.Color(38, 38, 38));
@@ -266,10 +271,8 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
     private javax.swing.JButton minimizeButton;
     // End of variables declaration//GEN-END:variables
 
-
     int xOff;
     int yOff;
-
 
     public void mouseEntered(MouseEvent e){
         return;
