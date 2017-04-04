@@ -17,7 +17,7 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
         this.getContentPane().setBackground(new Color(38,38,38));
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
-        setIconImage(new ImageIcon("icon.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("icon.png")).getImage());
     }
 
     /**
@@ -28,7 +28,7 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        Icon icon = new ImageIcon("logo.png");
+        Icon icon = new ImageIcon(getClass().getResource("logo.png"));
         logo = new JLabel(icon);
         jColorChooser1 = new javax.swing.JColorChooser();
         jColorChooser2 = new javax.swing.JColorChooser();
@@ -41,8 +41,8 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
         AccountName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        LOGIN = new javax.swing.JButton(new ImageIcon("LoginButton.png"));
-        CANCEL = new javax.swing.JButton(new ImageIcon("CancelButton.png"));
+        LOGIN = new javax.swing.JButton(new ImageIcon(getClass().getResource("/LoginButton.png")));
+        CANCEL = new javax.swing.JButton(new ImageIcon(getClass().getResource("CancelButton.png")));
         fakeRadio = new JButton("");
         jCheckBox1 = new JLabel();
         Password = new javax.swing.JPasswordField();
