@@ -377,7 +377,14 @@ public class LoginForm extends JFrame implements ActionListener, MouseListener, 
             runtime.exec(steamPath.toString());
         }
         catch (IOException e){
-            return ; // give up
+            // try in regular Program Files
+            try{
+                steamPath = Paths.get("C:","Program Files", "Steam", "Steam.exe");
+                runtime.exec(steamPath.toString());
+            }
+            catch(IOException a){
+                return;
+            }
         }
 
     }
