@@ -2,5 +2,9 @@ capture.txt
 jedit/
 !Buffer.java
 !DataHandler.java
+*.aux
+.log
+.out
+.gz
 
 
