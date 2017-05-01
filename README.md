@@ -6,4 +6,4 @@ A demonstration of a faked login client that phishes user information and, spera
 
 Both of these demonstrations send user information to a server running a Python script that captures data over a socket.
 
-![Diagram](https://github.com/mardiqwop/cs465project/diagram.png)
+![Diagram](https://github.com/mardiqwop/cs465project/blob/master/diagram.png)
